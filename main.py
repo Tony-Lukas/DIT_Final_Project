@@ -126,12 +126,12 @@ if __name__ == '__main__':
 
     while True:
         print("-"*25)
-        print("1. Display All")
-        print("2. Display Total Number")
-        print("3. Add")
-        print("4. Search")
-        print("5. Delete")
-        print("6. Update")
+        print("1. Display all dinosaurs")
+        print("2. Display total Number of dinosaurs")
+        print("3. Add dinosaur")
+        print("4. Search dinosaur")
+        print("5. Delete dinosaur")
+        print("6. Update dinosaur")
         print("7. Exit")
         user_input = input("Enter a number: ")
         print()
