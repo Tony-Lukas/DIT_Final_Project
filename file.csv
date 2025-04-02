@@ -1,11 +1,11 @@
 name,type,weight,height,closure_number,threat_level
-Tyrannosaurus rex,Theropod,14000 lbs,12 ft,Cretaceous,Extreme
-Triceratops,Ceratopsian,13000 lbs,10 ft,Cretaceous,Medium
-Velociraptor,Theropod,33 lbs,2 ft,Cretaceous,High
-Brachiosaurus,Sauropod,88000 lbs,40 ft,Jurassic,Low
-Stegosaurus,Ornithischian,6800 lbs,9 ft,Jurassic,Medium
-Allosaurus,Theropod,4000 lbs,8 ft,Jurassic,High
-Ankylosaurus,Ankylosaur,13000 lbs,6 ft,Cretaceous,Medium
-Spinosaurus,Theropod,20000 lbs,15 ft,Cretaceous,Extreme
-Diplodocus,Sauropod,25000 lbs,15 ft,Jurassic,Low
-Pteranodon,Pterosaur,55 lbs,6 ft wingspan,Cretaceous,Medium
+Tyrannosaurus rex,Theropod,14000 lbs,12 ft,4,Extreme
+Triceratops,Ceratopsian,13000 lbs,10 ft,5,Medium
+Velociraptor,Theropod,33 lbs,2 ft,7,High
+Brachiosaurus,Sauropod,88000 lbs,40 ft,12,Low
+Stegosaurus,Ornithischian,6800 lbs,9 ft,3,Medium
+Allosaurus,Theropod,4000 lbs,8 ft,1,High
+Ankylosaurus,Ankylosaur,13000 lbs,6 ft,6,Medium
+Spinosaurus,Theropod,20000 lbs,15 ft,7,Extreme
+Diplodocus,Sauropod,25000 lbs,15 ft,13,Low
+Pteranodon,Pterosaur,55 lbs,6 ft wingspan,9,Medium
