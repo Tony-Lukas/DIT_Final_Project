@@ -1,3 +1,5 @@
+print("Welcome to Jurassic Park Research Faculty (J.P.R.F)!")
+print("How can we help you today?")
 class ClassName():
     def __init__(self):
         self.col_names , self.data = self.load()
@@ -25,7 +27,7 @@ class ClassName():
                     row = line.split(',')
                     rows.append(row)
             f.close()
-            print("Data is loaded from file.csv")
+            # print("Data is loaded from file.csv")
             return col_names, rows
         except:
             print("There is no previous data")
@@ -39,7 +41,8 @@ class ClassName():
             f.write(','.join(self.col_names)+'\n')
             for row in self.data:
                 f.write(','.join(row)+'\n')
-        print('File is saved')
+        # print('File is saved')
+        print("Goodbye. Have a nice day!")
     
     def get_col_no(self):
         for i,col in enumerate(self.col_names,1):
@@ -65,9 +68,9 @@ class ClassName():
 
     def display_total_number(self,data = None):
         if data == None:
-            print("Total number of rows is",len(self.data))
+            print("Total number of dinosaurs: ",len(self.data))
         else:
-            print("Total number of rows is",len(data))
+            print("Total number of dinosaurs: ",len(data))
     
     def add(self):
         """
@@ -85,12 +88,14 @@ class ClassName():
         """
         search function
         """
+        
         col_no = self.get_col_no()
         search_value = input("Enter the value to search: ")
         result = []
         for row in self.data:
             if row[col_no] == search_value:
                 result.append(row)
+        print("\n----Search Results----")
         self.show(result)
         self.display_total_number(result)
 
@@ -125,7 +130,7 @@ if __name__ == '__main__':
     myclass = ClassName()
 
     while True:
-        print("-"*25)
+        print("\n", "="*5, "Main Menu", "="*5)
         print("1. Display all dinosaurs")
         print("2. Display total Number of dinosaurs")
         print("3. Add dinosaur")
