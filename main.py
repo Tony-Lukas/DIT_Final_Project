@@ -32,10 +32,10 @@ class ClassName():
                         self.max_len = list(map(lambda i:max(self.max_len[i],len(row[i])),range(self.noc)))
 
                         self.data.append(row)
-            print("Data is loaded from file.csv")
+            #print("Data is loaded from file.csv")
     
         except:
-            print("There is no previous data")
+            #print("There is no previous data")
             self.get_user_column()
         
     def save(self):
@@ -46,11 +46,11 @@ class ClassName():
             f.write(','.join(self.col_names)+'\n')
             for row in self.data:
                 f.write(','.join(row)+'\n')
-        print('File is saved')
+        #print('File is saved')
     
     def get_col_no(self):
         for i,col in enumerate(self.col_names,1):
-            print(i,col)
+            print(f"{i}. {col}")
         col_no = int(input("Enter column number to search: ")) -1
         return col_no
 
@@ -58,7 +58,7 @@ class ClassName():
         def formator(row,no=None):
             if no is None:
                 no = 'No'
-            return f"|{no:>3}|" + "|".join(map(lambda i:f"{row[i]:>{self.max_len[i]}}",range(self.noc))) + "|"
+            return f"|{no:>3}|" + "|".join(map(lambda i:f"{row[i]:>{self.max_len[i]+1}}",range(self.noc))) + "|"
         title = formator(self.col_names)
         print("-"*len(title))
         print(title)
@@ -109,7 +109,7 @@ class ClassName():
         search_value = input("Enter the value to search: ")
         result = []
         for row in self.data:
-            if row[col_no] == search_value:
+            if row[col_no].lower() == search_value.lower():
                 result.append(row)
         self.show(result)
         self.display_total_number(result)

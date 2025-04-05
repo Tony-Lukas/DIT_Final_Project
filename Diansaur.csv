@@ -1,0 +1,11 @@
+Name,Type,Weight (lbs),Height(ft),Closure Number,Threat Level
+Tyrannosaurus rex,Theropod,14000,12,4,Extreme
+Triceratops,Ceratopsian,13000,10,5,Medium
+Velociraptor,Theropod,33,2,7,High
+Brachiosaurus,Sauropod,88000,40,12,Low
+Stegosaurus,Ornithischian,6800,9,3,Medium
+Allosaurus,Theropod,4000,8,1,High
+Ankylosaurus,Ankylosaur,13000,6,6,Medium
+Spinosaurus,Theropod,20000,15,7,Extreme
+Diplodocus,Sauropod,25000,15,13,Low
+Pteranodon,Pterosaur,55,6,9,Medium
