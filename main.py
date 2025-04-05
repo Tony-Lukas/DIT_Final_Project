@@ -1,41 +1,48 @@
 class ClassName():
-    def __init__(self):
-        self.col_names , self.data = self.load()
+    def __init__(self,f_name=None):
+        if f_name is None:
+            f_name = input('Enter your porject name: ')
+        self.f_name = f_name
+        self.col_names = []
+        self.max_len = []
+        self.noc = 0
+        self.data = []
+        self.load()
     
     def get_user_column(self):
         N = int(input("Enter number of columns: "))
         col_names = []
         for i in range(N):
             col = input(f"Enter name of column {i+1}: ")
-            col_names.append(col)
-        return col_names
+            self.col_names.append(col)
+            self.max_len.append(len(col))
 
     def load(self):
-        """
-        load data form csv file
-        """
         try:
-            f = open('file.csv','r')
-            lines = f.readlines()
-            col_names = lines[0].strip().split(',')
-            rows = []
-            for line in lines[1:]:
-                line = line.strip()
-                if line:
-                    row = line.split(',')
-                    rows.append(row)
-            f.close()
+            with open(self.f_name+'.csv','r') as f:
+                lines = f.readlines()
+                self.col_names = lines[0].strip().split(',')
+                self.noc = len(self.col_names)
+                self.max_len = list(map(len,self.col_names))
+
+                for line in lines[1:]:
+                    line = line.strip()
+                    if line:
+                        row = line.split(',')
+                        self.max_len = list(map(lambda i:max(self.max_len[i],len(row[i])),range(self.noc)))
+
+                        self.data.append(row)
             print("Data is loaded from file.csv")
-            return col_names, rows
+    
         except:
             print("There is no previous data")
-            return self.get_user_column() , []
-
+            self.get_user_column()
+        
     def save(self):
         """
         save to file
         """
-        with open('file.csv','w') as f:
+        with open(f'{self.f_name}.csv','w') as f:
             f.write(','.join(self.col_names)+'\n')
             for row in self.data:
                 f.write(','.join(row)+'\n')
@@ -47,13 +54,26 @@ class ClassName():
         col_no = int(input("Enter column number to search: ")) -1
         return col_no
 
+    def show(self,rows): # show table format
+        def formator(row,no=None):
+            if no is None:
+                no = 'No'
+            return f"|{no:>3}|" + "|".join(map(lambda i:f"{row[i]:>{self.max_len[i]}}",range(self.noc))) + "|"
+        title = formator(self.col_names)
+        print("-"*len(title))
+        print(title)
+        print("-"*len(title))
+        for i,row in enumerate(rows,1):
+            print(formator(row,no=i))
+        print("-"*len(title))
+    """
     def show(self,rows):
         for n,row in enumerate(rows,1):
             print(n,end=' ')
             for i,cell in enumerate(row):
                 print(f"{self.col_names[i]}: {cell} ",end="")
             print()
-
+    """
     def display_all(self):
         """
         display all entry form data
@@ -65,9 +85,9 @@ class ClassName():
 
     def display_total_number(self,data = None):
         if data == None:
-            print("Total number of rows is",len(self.data))
+            print(f"Total number of {self.f_name} is {len(self.data)}")
         else:
-            print("Total number of rows is",len(data))
+            print(f"Total number of {self.f_name} is {len(data)}")
     
     def add(self):
         """
@@ -120,34 +140,35 @@ class ClassName():
 
         self.data[row_no][col_no] = value
         print("Update Successfully")
-
+    
+    def run(self):
+        while True:
+            print("1. Display All")
+            print("2. Display Total Number")
+            print("3. Add")
+            print("4. Search")
+            print("5. Delete")
+            print("6. Update")
+            print("7. Exit")
+            user_input = input("Enter a number: ")
+            print()
+            if user_input == '1':
+                self.display_all()
+            elif user_input == '2':
+                self.display_total_number()
+            elif user_input == '3':
+                self.add()
+            elif user_input == '4':
+                self.search()
+            elif user_input == '5':
+                self.delete()
+            elif user_input == '6':
+                self.update()
+            elif user_input == '7':
+                self.save()
+                break
+    
 if __name__ == '__main__':
     myclass = ClassName()
+    myclass.run()
 
-    while True:
-        print("-"*25)
-        print("1. Display All")
-        print("2. Display Total Number")
-        print("3. Add")
-        print("4. Search")
-        print("5. Delete")
-        print("6. Update")
-        print("7. Exit")
-        user_input = input("Enter a number: ")
-        print()
-        if user_input == '1':
-            myclass.display_all()
-        elif user_input == '2':
-            myclass.display_total_number()
-        elif user_input == '3':
-            myclass.add()
-        elif user_input == '4':
-            myclass.search()
-        elif user_input == '5':
-            myclass.delete()
-        elif user_input == '6':
-            myclass.update()
-        elif user_input == '7':
-            myclass.save()
-            break
-    
