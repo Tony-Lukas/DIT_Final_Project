@@ -1,4 +1,4 @@
-Name,Type,Weight (lbs),Height(ft),Closure Number,Threat Level
+Name,Type,Weight (lbs),Height(ft),Enclosure Number,Threat Level
 Tyrannosaurus rex,Theropod,14000,12,4,Extreme
 Triceratops,Ceratopsian,13000,10,5,Medium
 Velociraptor,Theropod,33,2,7,High
