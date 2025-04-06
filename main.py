@@ -8,7 +8,8 @@ class ClassName():
         self.noc = 0
         self.data = []
         self.load()
-    
+        self.scanner()
+
     def get_user_column(self):
         N = int(input("Enter number of columns: "))
         col_names = []
@@ -22,22 +23,29 @@ class ClassName():
             with open(self.f_name+'.csv','r') as f:
                 lines = f.readlines()
                 self.col_names = lines[0].strip().split(',')
-                self.noc = len(self.col_names)
-                self.max_len = list(map(len,self.col_names))
 
                 for line in lines[1:]:
-                    line = line.strip()
                     if line:
-                        row = line.split(',')
-                        self.max_len = list(map(lambda i:max(self.max_len[i],len(row[i])),range(self.noc)))
-
+                        row = line.strip().split(',')
                         self.data.append(row)
             #print("Data is loaded from file.csv")
     
         except:
             #print("There is no previous data")
             self.get_user_column()
-        
+
+    def scanner(self):
+        self.noc = len(self.col_names)
+        self.max_len = list(map(len,self.col_names))
+
+        for i,row in enumerate(self.data):
+            for j in range(self.noc):
+                self.max_len[j] = max(self.max_len[j],len(row[j]))
+                if row[j].isnumeric():
+                    self.data[i][j] = int(row[j])
+                elif row[j].replace('.','').isnumeric():
+                    self.data[i][j] = float(row[j])
+                
     def save(self):
         """
         save to file
@@ -45,7 +53,7 @@ class ClassName():
         with open(f'{self.f_name}.csv','w') as f:
             f.write(','.join(self.col_names)+'\n')
             for row in self.data:
-                f.write(','.join(row)+'\n')
+                f.write(','.join(map(str,row))+'\n')
         #print('File is saved')
     
     def get_col_no(self):
@@ -114,6 +122,10 @@ class ClassName():
         self.show(result)
         self.display_total_number(result)
 
+    def sort(self):
+        col_no = self.get_col_no()
+        s_data = sorted(self.data,key=lambda row:row[col_no])
+        self.show(s_data)
 
     def delete(self):
         """
@@ -149,7 +161,8 @@ class ClassName():
             print("4. Search")
             print("5. Delete")
             print("6. Update")
-            print("7. Exit")
+            print("7. Sort")
+            print("0. Exit")
             user_input = input("Enter a number: ")
             print()
             if user_input == '1':
@@ -165,6 +178,8 @@ class ClassName():
             elif user_input == '6':
                 self.update()
             elif user_input == '7':
+                self.sort()
+            elif user_input == '0':
                 self.save()
                 break
     
