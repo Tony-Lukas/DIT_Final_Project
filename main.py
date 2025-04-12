@@ -1,12 +1,19 @@
 class ClassName():
-    def __init__(self,f_name=None):
+    def __init__(self,f_name=None,table=None):
         if f_name is None:
             f_name = input('Enter your porject name: ')
+        if table is None:
+            t = input('Show Table Format? (y/n) ')
+            table = True if t == 'y' else False
+
         self.f_name = f_name
         self.data = []
         self.load()
-        self.noc = len(self.col_names)
-        self.update_len()
+        if table:
+            self.show = self.show_table
+        else:
+            self.show = self.show_dic
+
 
     def __get_user_column(self):
         N = int(input("Enter number of columns: "))
@@ -14,14 +21,12 @@ class ClassName():
         for i in range(N):
             col = input(f"Enter name of column {i+1}: ")
             self.col_names.append(col)
-            self.max_len.append(len(col))
 
     def load(self):
         try:
             with open(self.f_name+'.csv','r') as f:
                 lines = f.readlines()
                 self.col_names = lines[0].strip().split(',')
-                self.noc = len(self.col_names)
 
                 for line in lines[1:]:
                     if line:
@@ -33,13 +38,7 @@ class ClassName():
         except:
             print("There is no previous data")
             self.__get_user_column()
-
-    def update_len(self):
-        self.max_len = list(map(len,self.col_names))
-        for row in self.data:
-            for i,cell in enumerate(row):
-                self.max_len[i] = max(self.max_len[i],len(str(cell)))
-
+    
     def __scanner(self,row):
         for j in range(len(row)):
             if row[j].isnumeric():
@@ -64,13 +63,22 @@ class ClassName():
         col_no = int(input("Enter column number to search: ")) -1
         return col_no
 
-    def show(self,rows): # show table format
+    def show_table(self,rows,col_names=None): # show table format
+        if col_names is None :
+            col_names = self.col_names
+
         def formator(row,no=None):
             if no is None:
                 no = 'No'
-            #print(self.noc,self.max_len)
-            return f"|{no:>3}|" + "|".join(map(lambda i:f"{row[i]:>{self.max_len[i]+1}}",range(self.noc))) + "|"
-        title = formator(self.col_names)
+            return f"|{no:>3}|" + "|".join(map(lambda i:f"{row[i]:>{max_len[i]+1}}",range(noc))) + "|"
+        
+        max_len = list(map(len,col_names))
+        noc = len(col_names)
+        for row in rows:
+            for i,cell in enumerate(row):
+                max_len[i] = max(max_len[i],len(str(cell)))
+        
+        title = formator(col_names)
         print("-"*len(title))
         print(title)
         print("-"*len(title))
@@ -81,14 +89,18 @@ class ClassName():
             message = f"There is no {self.f_name}"
             print(f"{message:^{len(title)}}")
         print("-"*len(title))
-    """
-    def show(self,rows):
+    
+    def show_dic(self,rows,col_names=None):
+        if col_names == None:
+            col_names = self.col_names
+        print()
         for n,row in enumerate(rows,1):
-            print(n,end=' ')
+            print(n,end='. ')                
             for i,cell in enumerate(row):
-                print(f"{self.col_names[i]}: {cell} ",end="")
+                print(f"{col_names[i]}: {cell} ",end="")
             print()
-    """
+        print()
+
     def display_total_number(self,data = None):
         print(f"Total number of {self.f_name} is ",end='')
         print(0) if self.data == None else print(len(data))
@@ -101,12 +113,10 @@ class ClassName():
         row = []
         for i,col_name in enumerate(self.col_names):
             col_value = input(f"Enter {col_name}: ")
-            self.max_len[i] = max(self.max_len[i],len(col_value))
             row.append(col_value)
         row = self.__scanner(row)
         self.data.append(row)
-        self.update_len()
-        print('New Row is Added')
+        print(f'New {self.f_name} is Added')
 
     
     def search(self):
@@ -127,13 +137,12 @@ class ClassName():
         result = []
 
         for row in self.data:
-
             if condition == '1':
                 if isnum:
                     if row[col_no] == search_value:
                         result.append(row)
                 else:
-                    if row[col_no].lower() == search_value.lower():
+                    if row[col_no].lower().startswith(search_value.lower()):
                         result.append(row)
             elif condition == '2':
                 if row[col_no] > search_value:
@@ -144,7 +153,7 @@ class ClassName():
         self.show(result)
         self.display_total_number(result)
 
-    def sort(self,):
+    def sort(self):
         col_no = self.__get_col_no()
         s_data = sorted(self.data,key=lambda row:row[col_no])
         self.show(s_data)
@@ -160,7 +169,6 @@ class ClassName():
         if comfirm == 'Y' or comfirm == 'y':
             _ = self.data.pop(row_no)
             print("Delete successfully")
-            self.update_len()
             return
         print("Not Delete")
 
@@ -174,9 +182,22 @@ class ClassName():
         value = input("Enter value to update: ")
 
         self.data[row_no][col_no] = value
-        self.update_len()
         print("Update Successfully")
-    
+    def developer_info(self): 
+        col_names = ['Name','NickName','StudentID']
+        rows = [['Tin Maung Maung Htwe','Tide','6709111'],
+                ['Phone Pyae Kyaw','Mr. Ligma','6709222'],
+                ['Thiha Nyein','Luka','6709515']]
+        self.show(rows,col_names)
+
+    def key_feature(self):
+        features = ["Content Independent",
+                    "Search can be different depend on numerical and categorical value",
+                    "Show function with two style",
+                    "Use functional Programming( join , map, lambda)"]
+        for f in features:
+            print(f)
+            _ = input()
     def run(self):
         while True:
             print("1. Display All")
@@ -186,6 +207,8 @@ class ClassName():
             print("5. Delete")
             print("6. Update")
             print("7. Sort")
+            print("8. Developer Info")
+            print("9. Key Features")
             print("0. Exit")
             user_input = input("Enter a number: ")
             print()
@@ -203,11 +226,20 @@ class ClassName():
                 self.update()
             elif user_input == '7':
                 self.sort()
+            elif user_input == '8':
+                self.developer_info()
+            elif user_input == '9':
+                self.key_feature()
             elif user_input == '0':
-                self.save()
-                break
+                user_input = input(f"Save {self.f_name}.csv? (yes/no/cancle)")
+                if user_input == 'yes' or user_input == 'y':
+                    self.save()
+                    break
+                elif user_input == 'no' or user_input == 'n':
+                    break
+                else:
+                    continue
     
 if __name__ == '__main__':
     myclass = ClassName()
     myclass.run()
-
