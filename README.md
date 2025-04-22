@@ -1,3 +1,3 @@
 # Task
-- [ ] Order Function
-- [ ] Search for numerical col (< , > , == )
+- [-] Order Function
+- [-] Search for numerical col (< , > , == )
