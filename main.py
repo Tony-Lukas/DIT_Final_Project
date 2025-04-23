@@ -1,7 +1,7 @@
 class ClassName():
     def __init__(self,f_name=None):
         if f_name is None:
-            f_name = input('Enter your porject name: ')
+            f_name = input('Enter your project name: ')
         self.f_name = f_name
         self.col_names = []
         self.max_len = []
