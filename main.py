@@ -1,4 +1,4 @@
-class ClassName():
+class Dino():
     def __init__(self,f_name=None):
         if f_name is None:
             f_name = input('Enter your project name: ')
@@ -169,6 +169,6 @@ class ClassName():
                 break
     
 if __name__ == '__main__':
-    myclass = ClassName()
+    myclass = Dino()
     myclass.run()
 
