@@ -1,3 +1,5 @@
+import os
+
 class ClassName():
     def __init__(self,f_name=None,table=None):
         if f_name is None:
@@ -185,8 +187,8 @@ class ClassName():
         print("Update Successfully")
     def developer_info(self): 
         col_names = ['Name','NickName','StudentID']
-        rows = [['Tin Maung Maung Htwe','Tide','6709111'],
-                ['Phone Pyae Kyaw','Mr. Ligma','6709222'],
+        rows = [['Phone Pyae Kyaw','Mr. Ligma','6709453'],
+                ['Tin Maung Maung Htwe','Tide','6709755'],
                 ['Thiha Nyein','Luka','6709515']]
         self.show(rows,col_names)
 
@@ -200,6 +202,7 @@ class ClassName():
             _ = input()
     def run(self):
         while True:
+            os.system('cls' if os.name == 'nt' else 'clear')
             print("1. Display All")
             print("2. Display Total Number")
             print("3. Add")
