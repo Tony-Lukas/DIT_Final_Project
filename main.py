@@ -196,7 +196,8 @@ class ClassName():
         features = ["Content Independent",
                     "Search can be different depend on numerical and categorical value",
                     "Show function with two style",
-                    "Use functional Programming( join , map, lambda)"]
+                    "Use functional Programming( join , map, lambda)",
+                    "Clear Output"]
         for f in features:
             print(f)
             _ = input()
