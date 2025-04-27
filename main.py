@@ -1,21 +1,16 @@
 import os
 class MyClass():
-    def __init__(self,f_name=None,table=None):
+    def __init__(self,f_name=None):
         if f_name is None:
             f_name = input('Enter your porject name: ')
-        if table is None:
-            t = input('Show Table Format? (y/n) ')
-            table = True if t == 'y' else False
 
         self.f_name = f_name
         self.data = []
         self.load()
-        if table:
-            self.show = self.show_table
-        else:
-            self.show = self.show_dic
-
-
+        #setting
+        self.clear_output = False
+        self.show = self.show_table
+        
     def __get_user_column(self):
         N = int(input("Enter number of columns: "))
         col_names = []
@@ -34,10 +29,10 @@ class MyClass():
                         row = line.strip().split(',')
                         row = self.__scanner(row)
                         self.data.append(row)
-            print("Data is loaded from file.csv")
+            #print("Data is loaded from file.csv")
     
         except:
-            print("There is no previous data")
+            #print("There is no previous data")
             self.__get_user_column()
     
     def __scanner(self,row):
@@ -156,7 +151,12 @@ class MyClass():
 
     def sort(self):
         col_no = self.__get_col_no()
-        s_data = sorted(self.data,key=lambda row:row[col_no])
+        print('1. Ascending Order\n2. Decending Order')
+        order = input("Choose option")
+        if order == '1':
+            s_data = sorted(self.data,key=lambda row:row[col_no])
+        else:
+            s_data = sorted(self.data,key=lambda row:row[col_no],reverse=True)
         self.show(s_data)
 
     def delete(self):
@@ -184,25 +184,51 @@ class MyClass():
 
         self.data[row_no][col_no] = value
         print("Update Successfully")
-    def developer_info(self): 
+    
+    def about_us(self): 
+        print('\nDevelopers')
         col_names = ['Name','NickName','StudentID']
         rows = [['Phone Pyae Kyaw','Mr. Ligma','6709453'],
                 ['Tin Maung Maung Htwe','Tide','6709755'],
                 ['Thiha Nyein','Luka','6709515']]
         self.show(rows,col_names)
-
-    def key_feature(self):
+        
         features = ["Content Independent",
                     "Search can be different depend on numerical and categorical value",
                     "Show function with two style",
                     "Use functional Programming( join , map, lambda)",
+                    "Sorting with difference order",
                     "Clear Output"]
+        print("\nKey Features")
         for f in features:
             print(f)
-            _ = input()
+            #_ = input()
+
+    def setting(self,n=None):
+        t = 'y'
+        if n == None:
+            print("1. Output Format\n2. Clear Output")
+            n = input("Chose Option: ")
+        
+        if n == '1':
+            t = input('Show Table Format? (y/n) ')        
+            if t == 'y' or t == 'Y':
+                self.show = self.show_table
+            else:
+                self.show = self.show_dic
+        
+        elif n == '2':
+            c = input('Do you want to clear Output? (y/n)')
+            if c == 'y' or c == 'Y':
+                self.clear_output = True
+            else:
+                self.clear_output = False
+
     def run(self):
         while True:
-            os.system('cls' if os.name == 'nt' else 'clear')
+            if self.clear_output:
+                _ = input("Press Any Key to Continue: ")
+                os.system('cls' if os.name == 'nt' else 'clear')
             print("1. Display All")
             print("2. Display Total Number")
             print("3. Add")
@@ -210,10 +236,10 @@ class MyClass():
             print("5. Delete")
             print("6. Update")
             print("7. Sort")
-            print("8. Developer Info")
-            print("9. Key Features")
+            print("8. About Us")
+            print("9. Setting")
             print("0. Exit")
-            user_input = input("Enter a number: ")
+            user_input = input("Choose Option: ")
             print()
             if user_input == '1':
                 self.show(self.data)
@@ -230,9 +256,9 @@ class MyClass():
             elif user_input == '7':
                 self.sort()
             elif user_input == '8':
-                self.developer_info()
+                self.about_us()
             elif user_input == '9':
-                self.key_feature()
+                self.setting()
             elif user_input == '0':
                 user_input = input(f"Save {self.f_name}.csv? (yes/no/cancle)")
                 if user_input == 'yes' or user_input == 'y':
