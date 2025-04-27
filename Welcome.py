@@ -11,7 +11,7 @@ class Dinosour(MyClass):
         super().__init__('Dinosaurs')
 
     def load_logo(self):
-        with open('logo.txt','r') as f:
+        with open('logo.txt','r',encoding='utf-8') as f:
             return f.readlines()
     
     def show_logo(self):
